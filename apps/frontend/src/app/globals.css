@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Feature+Mono:ital,wght@0,400;1,400&family=Montserrat:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  font-style: normal;
+}
+
+em,
+i {
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family:
+    'Feature Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-sans {
+  font-family:
+    'Montserrat',
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+.font-mono {
+  font-family:
+    'Feature Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+}
+
+@layer base {
+  :root {
+    --section-spacing-sm: 4rem; 
+    --section-spacing-lg: 8rem; 
+    --block-spacing: 2.5rem; 
+    --inner-spacing: 0.5rem; 
+  }
+
+  input,
+  select,
+  textarea,
+  button:not(.font-heading) {
+    @apply h-14 rounded-xl border-white/10 bg-white/[0.03] px-6 font-mono text-sm tracking-wide text-white transition-all duration-300 placeholder:text-slate-600 focus:border-primary/40 focus:outline-none focus:ring-1 focus:ring-primary/40;
+  }
+
+  textarea {
+    @apply h-auto py-4;
+  }
+
+  label {
+    @apply mb-2 block font-mono text-[11px] uppercase tracking-super-wide text-primary/60;
+  }
+}
+
+.leaflet-container {
+  background-color: hsl(var(--background));
+  font-family: 'Feature Mono', monospace;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background:
+    linear-gradient(135deg, rgba(96, 31, 140, 0.16), rgba(29, 4, 191, 0.22)), hsl(var(--background));
+  color: #e2e8f0;
+  border: 1px solid rgba(96, 31, 140, 0.3);
+}
+
+.leaflet-popup-content {
+  margin: 10px 12px;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 210 33% 96%;
+    --card: 252 54% 11%;
+    --card-foreground: 210 33% 96%;
+    --popover: 252 54% 11%;
+    --popover-foreground: 210 33% 96%;
+    --primary: 180 85% 35%; 
+    --primary-foreground: 210 40% 98%;
+    --secondary: 252 36% 16%;
+    --secondary-foreground: 210 33% 96%;
+    --muted: 247 22% 14%;
+    --muted-foreground: 220 14% 68%;
+    --accent: 274 64% 34%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 72% 44%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 0.12;
+    --input: 252 27% 15%;
+    --ring: 180 85% 35% / 0.42;
+    --chart-1: 274 64% 34%;
+    --chart-2: 249 96% 38%;
+    --chart-3: 225 70% 62%;
+    --chart-4: 335 74% 62%;
+    --chart-5: 38 90% 58%;
+    --gradient-start: 274 64% 34%; 
+    --gradient-end: 249 96% 38%; 
+    --surface: 255 32% 8%;
+    --surface-soft: 251 26% 12%;
+    --panel: 254 37% 14%;
+    --panel-foreground: 210 33% 96%;
+    --radius: 0;
+  }
+}
