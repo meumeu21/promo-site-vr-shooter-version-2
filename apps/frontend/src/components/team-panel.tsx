@@ -45,29 +45,29 @@ export const TeamPanel = ({
       </div>
 
       <div className="space-y-2">
-        {team.players.map((player: MatchPlayerStats) => <div key={player.id} className="group relative flex items-center justify-between gap-4 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:bg-white/[0.05]">
-            <div className="flex items-center gap-4">
-              <div className={`h-10 w-1 rounded-full ${accent.light}`}></div>
-              <div>
-                <p className="font-bold uppercase tracking-tight text-white">{player.nickname}</p>
-                {DISPLAY_CONFIG.match.showPlayerId && <p className="font-mono text-[11px] text-slate-500">
+        {team.players.map((player: MatchPlayerStats) => <div key={player.id} className="group relative flex items-center justify-between gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:bg-white/[0.05] sm:gap-4">
+            <div className="flex min-w-0 flex-1 items-center gap-4">
+              <div className={`h-10 w-1 shrink-0 rounded-full ${accent.light}`}></div>
+              <div className="min-w-0">
+                <p className="truncate font-bold uppercase tracking-tight text-white">{player.nickname}</p>
+                {DISPLAY_CONFIG.match.showPlayerId && <p className="hidden font-mono text-[11px] text-slate-500 md:block">
                     ID игрока: {player.id.slice(0, 6)}
                   </p>}
               </div>
             </div>
-
-            <div className="flex items-center gap-6">
+ 
+            <div className="flex shrink-0 items-center gap-4 sm:gap-6">
               {DISPLAY_CONFIG.match.showPlayerStats && <>
-                  <div className="text-center w-16">
+                  <div className="hidden text-center w-16 md:block">
                     <p className="font-mono text-[11px] uppercase text-slate-500">Убийств</p>
                     <p className="font-black text-white">{player.kills}</p>
                   </div>
-                  <div className="text-center w-16">
+                  <div className="hidden text-center w-16 md:block">
                     <p className="font-mono text-[11px] uppercase text-slate-500">Смертей</p>
                     <p className="font-black text-slate-400">{player.deaths}</p>
                   </div>
                 </>}
-              {DISPLAY_CONFIG.match.showPlayerKda && <div className="text-center w-12">
+              {DISPLAY_CONFIG.match.showPlayerKda && <div className="text-center w-12 sm:w-14">
                   <p className="font-mono text-[11px] uppercase text-slate-500">K/D</p>
                   <p className={`font-black ${player.kda >= 1 ? 'text-emerald-400' : 'text-red-400'}`}>
                     {player.kda.toFixed(1)}

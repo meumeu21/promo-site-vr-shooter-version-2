@@ -160,7 +160,7 @@ function MatchCard({
 }: {
   match: HistoryMatchListItem;
 }) {
-  return <Link href={`/matches/${match.id}`} className="group/card relative flex flex-col gap-4 bg-transparent px-6 py-4 transition-all hover:bg-white/[0.04] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+  return <Link href={`/matches/${match.id}`} className="group/card relative flex items-center justify-between gap-4 bg-transparent px-6 py-4 transition-all hover:bg-white/[0.04] sm:px-8">
       <span className="sr-only">Перейти к матчу </span>
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/[0.04] text-slate-400 transition-colors group-hover/card:bg-primary/10 group-hover/card:text-primary">
@@ -178,8 +178,8 @@ function MatchCard({
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-6 sm:justify-end sm:gap-10">
-        <div className="flex flex-col items-center space-y-0.5 sm:items-end">
+      <div className="flex items-center justify-end gap-6 sm:gap-10">
+        <div className="hidden flex-col items-center space-y-0.5 sm:items-end md:flex">
           <p className="font-mono text-[10px] uppercase tracking-super-wide text-slate-500">Счёт</p>
           <p className="font-mono text-2xl font-black tabular-nums tracking-cyber text-white">
             {getMatchScoreline(match.teams)}

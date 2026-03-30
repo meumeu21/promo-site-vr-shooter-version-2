@@ -1,4 +1,3 @@
-
 interface MatchDetailWinnerProps {
   side: string | null;
 }

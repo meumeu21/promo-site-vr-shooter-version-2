@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { siteContent } from '@/content/placeholders';
+import { Button } from '@/components/ui/button';
 interface AppLayoutProps {
   children: ReactNode;
 }
@@ -15,47 +17,113 @@ export const AppLayout = ({
   children
 }: AppLayoutProps) => {
   const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const leftNav = siteContent.nav.slice(0, 2);
   const rightNav = siteContent.nav.slice(2);
+
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Node)) {
+        return;
+      }
+
+      const menu = document.getElementById('mobile-site-navigation');
+      const trigger = document.getElementById('mobile-site-navigation-trigger');
+
+      if (menu?.contains(target) || trigger?.contains(target)) {
+        return;
+      }
+
+      setIsMobileMenuOpen(false);
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('touchstart', handlePointerDown);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('touchstart', handlePointerDown);
+    };
+  }, [isMobileMenuOpen]);
+
   const getNavItemClassName = (href: string) => {
     const isActive = href === '/' ? pathname === href : pathname.startsWith(href);
     return `relative font-heading text-[10px] font-bold uppercase tracking-[0.2em] transition-all lg:text-[12px] ${isActive ? 'text-primary' : 'text-slate-300 hover:text-primary'}`;
   };
   return <div className="flex min-h-screen flex-col bg-background text-slate-100">
       <header className="sticky top-4 z-50 flex w-full justify-center px-4">
-        <div className="clip-techno relative flex h-14 w-full max-w-6xl items-center border border-white/10 bg-white/5 shadow-[0_0_30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-          <nav className="flex h-full w-full items-center justify-between px-4 lg:px-10">
-            <ul className="hidden flex-1 items-center justify-center gap-6 md:flex lg:gap-10">
-              {leftNav.map(item => <li key={item.href}>
-                  <Link href={item.href} className={getNavItemClassName(item.href)}>
-                    {item.label}
-                  </Link>
-                </li>)}
-            </ul>
-
-            <div className="flex shrink-0 items-center justify-center px-4 lg:px-12">
-              <Link href="/" aria-label="SHOOTER VR">
-                <Logo />
-              </Link>
-            </div>
-
-            <div className="flex flex-1 items-center justify-center gap-6 lg:gap-10">
-              <ul className="hidden items-center gap-6 md:flex lg:gap-10">
-                {rightNav.map(item => <li key={item.href}>
-                  <Link href={item.href} className={getNavItemClassName(item.href)}>
-                    {item.label}
-                  </Link>
+        <div className="relative w-full max-w-6xl">
+          <div className="clip-techno relative flex h-14 items-center border border-white/10 bg-white/5 shadow-[0_0_30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+            <nav className="flex h-full w-full items-center justify-between px-4 lg:px-10">
+              <ul className="hidden flex-1 items-center justify-center gap-6 md:flex lg:gap-10">
+                {leftNav.map(item => <li key={item.href}>
+                    <Link href={item.href} className={getNavItemClassName(item.href)}>
+                      {item.label}
+                    </Link>
                   </li>)}
               </ul>
-            </div>
 
-            <div className="cursor-pointer text-primary md:hidden" aria-hidden="true">
-              <div className="mb-1 h-0.5 w-6 bg-current"></div>
-              <div className="ml-auto h-0.5 w-4 bg-current"></div>
-            </div>
-          </nav>
+              <div className="flex shrink-0 items-center justify-center px-4 lg:px-12">
+                <Link href="/" aria-label="SHOOTER VR">
+                  <Logo />
+                </Link>
+              </div>
 
-          <div className="absolute left-1/2 top-0 h-1 w-32 -translate-x-1/2 rounded-b-full bg-primary/40"></div>
+              <div className="flex flex-1 items-center justify-end gap-6 lg:justify-center lg:gap-10">
+                <ul className="hidden items-center gap-6 md:flex lg:gap-10">
+                  {rightNav.map(item => <li key={item.href}>
+                      <Link href={item.href} className={getNavItemClassName(item.href)}>
+                        {item.label}
+                      </Link>
+                    </li>)}
+                </ul>
+
+                <Button
+                  id="mobile-site-navigation-trigger"
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="border border-primary/30 bg-primary/10 text-primary shadow-[0_0_20px_rgba(13,166,166,0.18)] hover:border-primary/60 hover:bg-primary/20 md:hidden"
+                  aria-label={isMobileMenuOpen ? 'Закрыть меню навигации' : 'Открыть меню навигации'}
+                  aria-expanded={isMobileMenuOpen}
+                  aria-controls="mobile-site-navigation"
+                  onClick={() => setIsMobileMenuOpen(current => !current)}
+                >
+                  {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+                </Button>
+              </div>
+            </nav>
+
+            <div className="absolute left-1/2 top-0 h-1 w-32 -translate-x-1/2 rounded-b-full bg-primary/40"></div>
+          </div>
+
+          {isMobileMenuOpen ? <div
+              id="mobile-site-navigation"
+              className="absolute left-0 top-[calc(100%+0.5rem)] z-40 w-full overflow-hidden rounded-2xl border border-white/10 p-3 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:hidden"
+            >
+              <div className="grid gap-2">
+                {siteContent.nav.map(item => {
+                const isActive = item.href === '/' ? pathname === item.href : pathname.startsWith(item.href);
+                return <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`flex items-center justify-between rounded-xl px-4 py-3 font-heading text-xs font-bold uppercase tracking-[0.2em] transition-all ${isActive ? 'border-primary/60 bg-primary/15 text-primary shadow-[0_0_24px_rgba(13,166,166,0.16)]' : 'border-white/10 bg-white/[0.03] text-slate-200 hover:border-primary/30 hover:bg-white/[0.06] hover:text-primary'}`}
+                  >
+                    <span>{item.label}</span>
+                  </Link>;
+              })}
+              </div>
+            </div> : null}
         </div>
       </header>
 
