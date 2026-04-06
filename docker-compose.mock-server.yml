@@ -24,4 +24,4 @@ services:
 networks:
   lbe-network:
     external: true
-    name: shoter_lbe-network
+    name: promo-site-vr-shooter-version-2_lbe-network
