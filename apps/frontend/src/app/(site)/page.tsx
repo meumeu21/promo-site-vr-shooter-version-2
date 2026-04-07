@@ -3,6 +3,7 @@ import { GallerySection } from '@/components/gallery-section';
 import { GameDetailsSection } from '@/components/game-details-section';
 import { HeroSection } from '@/components/hero-section';
 import { RulesSection } from '@/components/rules-section';
+import { YandexMapSection } from '@/components/yandex-map-section';
 
 export default function LandingPage() {
   return (
@@ -20,6 +21,8 @@ export default function LandingPage() {
       </div>
 
       <GallerySection />
+
+      <YandexMapSection />
     </div>
   );
 }
