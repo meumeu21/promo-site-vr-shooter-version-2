@@ -23,18 +23,13 @@ export function MatchHistoryFeed({
   const [clubOffset, setClubOffset] = useState(initialData.length);
   const [loadingClubs, setLoadingClubs] = useState(false);
   const [totalClubs, setTotalClubs] = useState(initialTotalClubs);
+
   useEffect(() => {
+    setClubs(initialData);
+    setClubOffset(initialData.length);
     setTotalClubs(initialTotalClubs);
-    if (clubOffset <= initialData.length) {
-      setClubs(initialData);
-      setClubOffset(initialData.length);
-    } else {
-      setClubs(prev => {
-        const updated = [...initialData, ...prev.slice(initialData.length)];
-        return updated;
-      });
-    }
   }, [initialData, initialTotalClubs]);
+
   const loadMoreClubs = async () => {
     if (loadingClubs) return;
     setLoadingClubs(true);
@@ -47,8 +42,8 @@ export function MatchHistoryFeed({
         from: filters?.from,
         to: filters?.to
       });
-      setClubs([...clubs, ...result.data]);
-      setClubOffset(clubOffset + result.data.length);
+      setClubs(prev => [...prev, ...result.data]);
+      setClubOffset(prev => prev + result.data.length);
     } catch (error) {
       console.error('Failed to load more clubs:', error);
     } finally {
@@ -83,18 +78,13 @@ function ClubHistoryAccordion({
   const [hasMore, setHasMore] = useState(initialGroup.hasMoreMatches);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(!!filters?.clubSlug);
+
   useEffect(() => {
-    if (offset <= initialGroup.matches.length) {
-      setMatches(initialGroup.matches);
-      setOffset(initialGroup.matches.length);
-      setHasMore(initialGroup.hasMoreMatches);
-    } else {
-      setMatches(prev => {
-        const updated = [...initialGroup.matches, ...prev.slice(initialGroup.matches.length)];
-        return updated;
-      });
-    }
+    setMatches(initialGroup.matches);
+    setOffset(initialGroup.matches.length);
+    setHasMore(initialGroup.hasMoreMatches);
   }, [initialGroup.matches, initialGroup.hasMoreMatches]);
+
   const loadMoreMatches = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -108,8 +98,8 @@ function ClubHistoryAccordion({
         from: filters?.from,
         to: filters?.to
       });
-      setMatches([...matches, ...result.data]);
-      setOffset(offset + result.data.length);
+      setMatches(prev => [...prev, ...result.data]);
+      setOffset(prev => prev + result.data.length);
       setHasMore(offset + result.data.length < result.meta.total);
     } catch (error) {
       console.error('Failed to load more matches:', error);

@@ -27,6 +27,18 @@ interface SiteContent {
     testimonials: string[];
     locations: LandingLocation[];
   };
+  business: {
+    offer: string;
+    benefits: string[];
+    requirements: string[];
+    monetization: string[];
+  };
+  booking: {
+    cities: string[];
+    clubs: string[];
+    clubsByCity: Record<string, string[]>;
+    slots: string[];
+  };
 }
 export const siteContent: SiteContent = {
   brand: 'SHOOTER VR',
@@ -92,5 +104,21 @@ export const siteContent: SiteContent = {
       },
       features: ['PvP-матчи', 'Статистика игроков', 'Запись на игру']
     }]
+  },
+  business: {
+    offer: 'Подключите SHOOTER VR на площадке партнера.',
+    benefits: ['Игровой продукт с командным матчевым сценарием', 'История матчей и пост-игровой интерес', 'Поддержка запуска и сопровождения'],
+    requirements: ['Подходящая игровая площадь', 'Стабильный интернет и электрика', 'Команда операторов на площадке'],
+    monetization: ['Игровые сессии', 'Повторные визиты игроков', 'Турнирные и матчевые форматы']
+  },
+  booking: {
+    cities: ['Москва', 'Санкт-Петербург', 'Казань'],
+    clubs: ['Площадка Центр', 'Площадка Север', 'Площадка Юг'],
+    clubsByCity: {
+      Москва: ['Площадка Центр'],
+      'Санкт-Петербург': ['Площадка Север'],
+      Казань: ['Площадка Юг']
+    },
+    slots: ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00']
   }
 };
